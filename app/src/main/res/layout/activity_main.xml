@@ -25,7 +25,9 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
 
-        android:background="@color/bottomNavigationView"
+        android:background="@color/bottom_nav_background"
+        app:itemIconTint="@drawable/bottom_nav_colors"
+        app:itemIconColor="@drawable/bottom_nav_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
