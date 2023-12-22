@@ -6,17 +6,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/home_img"
-        android:title="home" />
+        android:title="" />
     <item
         android:id="@+id/basketFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_shopping_basket_24"
-        android:title="basket" />
+        android:title="" />
     <item
         android:id="@+id/searchFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/search_img"
-        android:title="search" />
+        android:title="" />
 </menu>
