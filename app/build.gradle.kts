@@ -57,4 +57,6 @@ dependencies {
     // Navigation Component
     implementation ("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation ("androidx.navigation:navigation-ui-ktx:$nav_version")
+    //Picasso for imageURL
+    implementation("com.squareup.picasso:picasso:2.71828")
 }
