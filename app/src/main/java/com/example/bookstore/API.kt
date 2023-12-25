@@ -8,4 +8,7 @@ interface API {
 
     @GET("search/kotlin")
     fun kotlinBooks() : Call<KotlinBooksApi>
+
+    @GET("search/android")
+    fun androidBooks() : Call<AndroidBooksApi>
 }

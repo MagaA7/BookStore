@@ -22,3 +22,14 @@ data class KotlinBooks(
     var url : String
 )
 
+data class AndroidBooksApi(
+    var books : List<AndroidBooks>
+)
+
+data class AndroidBooks(
+    var title : String,
+    var price : String,
+    var image: String,
+    var url : String
+)
+

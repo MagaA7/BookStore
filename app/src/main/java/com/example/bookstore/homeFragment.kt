@@ -26,6 +26,7 @@ class homeFragment : Fragment() {
     private val array : ArrayList<String> = ArrayList()
     private val adapter = NewBookAdapter(emptyList())
     lateinit var recyclerView2 : RecyclerView
+    lateinit var recyclerView3 : RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +36,16 @@ class homeFragment : Fragment() {
         val view = binding.root
         recyclerView = view.findViewById(R.id.recyclerView_newBooks)
         recyclerView2 = view.findViewById(R.id.recyclerView2)
+        recyclerView3 = view.findViewById(R.id.recyclerView_androidBooks)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         recyclerView2.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        recyclerView3.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         recyclerView.setHasFixedSize(true)
         recyclerView2.setHasFixedSize(true)
+        recyclerView3.setHasFixedSize(true)
         loadNewBooks()
         loadKotlinBooks()
+        loadAndroidBooks()
         return view
     }
 
@@ -99,6 +104,27 @@ class homeFragment : Fragment() {
 
             }
             override fun onFailure(call: Call<KotlinBooksApi>, t: Throwable) {
+                Log.d("SKA","SDKAS")
+            }
+        })
+    }
+
+    fun loadAndroidBooks(){
+        val retrofit = Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build().create(API::class.java)
+        val data = retrofit.androidBooks()
+        data.enqueue(object : Callback<AndroidBooksApi> {
+            override fun onResponse(call: Call<AndroidBooksApi>, response: Response<AndroidBooksApi>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    val list = responseBody?.books
+                    if(list != null) {
+                        recyclerView3.adapter = AndroidBookAdapter(list)
+                    }
+                    Log.d("AR","$list")
+                }
+
+            }
+            override fun onFailure(call: Call<AndroidBooksApi>, t: Throwable) {
                 Log.d("SKA","SDKAS")
             }
         })
