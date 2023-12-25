@@ -25,7 +25,7 @@ class homeFragment : Fragment() {
     private val list: ArrayList<NewBooksApi> = ArrayList()
     private val array : ArrayList<String> = ArrayList()
     private val adapter = NewBookAdapter(emptyList())
-
+    lateinit var recyclerView2 : RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +33,14 @@ class homeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
         val view = binding.root
-        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView = view.findViewById(R.id.recyclerView_newBooks)
+        recyclerView2 = view.findViewById(R.id.recyclerView2)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        recyclerView2.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         recyclerView.setHasFixedSize(true)
+        recyclerView2.setHasFixedSize(true)
         loadNewBooks()
+        loadKotlinBooks()
         return view
     }
 
@@ -47,19 +51,37 @@ class homeFragment : Fragment() {
             override fun onResponse(call: Call<NewBooksApi>, response: Response<NewBooksApi>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null) {
-                        for(data in responseBody.books){
-                            array.add(data.title)
-                        }
+                    val list = responseBody?.books
+                    if(list != null) {
+                        recyclerView.adapter = NewBookAdapter(list)
                     }
-                    recyclerView.adapter = NewBookAdapter(array)
-
-                    Log.d("ARsen","$array")
+                    Log.d("ARsen","$list")
                 }
 
             }
             override fun onFailure(call: Call<NewBooksApi>, t: Throwable) {
                     Log.d("SKAZAK","SDKAS")
+            }
+        })
+    }
+
+    fun loadKotlinBooks(){
+        val retrofit = Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build().create(API::class.java)
+        val data = retrofit.kotlinBooks()
+        data.enqueue(object : Callback<KotlinBooksApi> {
+            override fun onResponse(call: Call<KotlinBooksApi>, response: Response<KotlinBooksApi>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    val list = responseBody?.books
+                    if(list != null) {
+                        recyclerView2.adapter = KotlinBookAdapter(list)
+                    }
+                    Log.d("AR","$list")
+                }
+
+            }
+            override fun onFailure(call: Call<KotlinBooksApi>, t: Throwable) {
+                Log.d("SKA","SDKAS")
             }
         })
     }

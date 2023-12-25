@@ -6,4 +6,6 @@ interface API {
     @GET("new")
     fun newBooks(): Call<NewBooksApi>
 
+    @GET("search/kotlin")
+    fun kotlinBooks() : Call<KotlinBooksApi>
 }
