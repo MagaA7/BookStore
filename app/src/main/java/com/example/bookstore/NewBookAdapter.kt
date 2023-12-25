@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-
+//kkkk
 
 class NewBookAdapter(var content : List<NewBooks>) : RecyclerView.Adapter<NewBookAdapter.ViewHolder>() {
     inner class ViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
