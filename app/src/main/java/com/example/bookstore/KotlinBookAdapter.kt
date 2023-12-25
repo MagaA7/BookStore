@@ -12,7 +12,7 @@ class KotlinBookAdapter(var content : List<KotlinBooks>) : RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KotlinBookAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_kotlin,parent,false)
         return ViewHolder(view)
     }
 

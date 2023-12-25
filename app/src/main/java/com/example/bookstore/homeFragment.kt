@@ -47,23 +47,41 @@ class homeFragment : Fragment() {
     fun loadNewBooks(){
         val retrofit = Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build().create(API::class.java)
         val data = retrofit.newBooks()
+        val kotlin = retrofit.kotlinBooks()
         data.enqueue(object : Callback<NewBooksApi> {
             override fun onResponse(call: Call<NewBooksApi>, response: Response<NewBooksApi>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     val list = responseBody?.books
-                    if(list != null) {
+                    if (list != null) {
                         recyclerView.adapter = NewBookAdapter(list)
                     }
-                    Log.d("ARsen","$list")
+                    Log.d("ARsen", "$list")
                 }
 
             }
+
             override fun onFailure(call: Call<NewBooksApi>, t: Throwable) {
-                    Log.d("SKAZAK","SDKAS")
+                Log.d("SKAZAK", "SDKAS")
             }
         })
-    }
+                kotlin.enqueue(object : Callback<KotlinBooksApi> {
+                override fun onResponse(call: Call<KotlinBooksApi>, response: Response<KotlinBooksApi>) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        val list = responseBody?.books
+                        if(list != null) {
+                            recyclerView2.adapter = KotlinBookAdapter(list)
+                        }
+                        Log.d("AR","$list")
+                    }
+
+                }
+                override fun onFailure(call: Call<KotlinBooksApi>, t: Throwable) {
+                    Log.d("SKA","SDKAS")
+                }
+            })
+        }
 
     fun loadKotlinBooks(){
         val retrofit = Retrofit.Builder().baseUrl(URL).addConverterFactory(GsonConverterFactory.create()).build().create(API::class.java)
@@ -85,4 +103,5 @@ class homeFragment : Fragment() {
             }
         })
     }
-}
+    }
+
