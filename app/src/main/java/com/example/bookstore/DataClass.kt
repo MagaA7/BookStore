@@ -41,3 +41,13 @@ data class SelectedBook(
     var url : String
 )
 
+data class SearchBooksApi(
+    var books : List<SearchBook>
+)
+
+data class SearchBook(
+    var title : String,
+    var price : String,
+    var image : String
+)
+

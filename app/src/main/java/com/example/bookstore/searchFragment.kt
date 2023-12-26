@@ -1,59 +1,79 @@
 package com.example.bookstore
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.bookstore.databinding.FragmentSearchBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-//1
-/**
- * A simple [Fragment] subclass.
- * Use the [searchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class searchFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var recyclerViewSearch: RecyclerView
+    private lateinit var searchView: SearchView
+    private lateinit var binding : FragmentSearchBinding
+    private var mList = ArrayList<NewBooks>()
+    lateinit var path : String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment searchFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            searchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        binding = FragmentSearchBinding.inflate(inflater,container,false)
+        val view = binding.root
+        path = "Default"
+        recyclerViewSearch = view.findViewById(R.id.recyclerViewSearch)
+        recyclerViewSearch.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewSearch.setHasFixedSize(true)
+        searchView = view.findViewById(R.id.searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    path = query
+                    searchBooks()
                 }
+                return true
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return true
+            }
+
+        })
+        return view
+    }
+    /////
+    fun searchBooks(){
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.itbook.store/1.0/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build().create(API::class.java)
+
+        val data = retrofit.search(path)
+        data.enqueue(object : Callback<SearchBooksApi> {
+            override fun onResponse(call: Call<SearchBooksApi>, response: Response<SearchBooksApi>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    val list = responseBody?.books
+                    if (list != null) {
+                        recyclerViewSearch.adapter = SearchAdapter(list)
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<SearchBooksApi>, t: Throwable) {
+                Log.d("SKAZAK", "SDKAS")
+            }
+        })
     }
 }

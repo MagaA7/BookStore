@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
 class SelectedBookAdapter(var content: MutableList<SelectedBook>) : RecyclerView.Adapter<SelectedBookAdapter.ViewHolder>() {
+    private var selectedBooks : List<SelectedBook> = emptyList()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.imageView_basket)
         val title: TextView = itemView.findViewById(R.id.textView_title)
@@ -30,6 +31,12 @@ class SelectedBookAdapter(var content: MutableList<SelectedBook>) : RecyclerView
     override fun getItemCount(): Int {
         return content.size
     }
+
+    fun submitList(newList: List<SelectedBook>) {
+        selectedBooks = newList
+        notifyDataSetChanged()
+    }
+
 
     fun update(arrayList: ArrayList<SelectedBook>){
         content.clear()

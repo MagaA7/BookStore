@@ -27,21 +27,17 @@ class basketFragment : Fragment() {
         val view = binding.root
         recyclerView = view.findViewById(R.id.recyclerView_basket)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = selectedBookAdapter
         recyclerView.setHasFixedSize(true)
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         data = ViewModelProvider(requireActivity()).get(BookViewModel::class.java)
-
-        data.selectedBook.observe(viewLifecycleOwner, Observer {
-            list.add(it)
-            selectedBookAdapter.notifyItemInserted(list.size - 1)
-
+        data.selectedBooks.observe(viewLifecycleOwner, Observer { selectedBooks ->
+            selectedBookAdapter.submitList(selectedBooks)
         })
-
 
     }
 }

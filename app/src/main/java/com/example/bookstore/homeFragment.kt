@@ -69,21 +69,7 @@ class homeFragment : Fragment() {
                 Log.d("SKAZAK", "SDKAS")
             }
         })
-                kotlin.enqueue(object : Callback<KotlinBooksApi> {
-                override fun onResponse(call: Call<KotlinBooksApi>, response: Response<KotlinBooksApi>) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-                        val list = responseBody?.books
-                        if(list != null) {
-                            recyclerView2.adapter = KotlinBookAdapter(list)
-                        }
-                    }
 
-                }
-                override fun onFailure(call: Call<KotlinBooksApi>, t: Throwable) {
-                    Log.d("SKA","SDKAS")
-                }
-            })
         }
 
     fun loadKotlinBooks(){

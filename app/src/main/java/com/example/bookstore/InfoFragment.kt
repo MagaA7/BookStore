@@ -34,6 +34,8 @@ class InfoFragment : Fragment() {
             binding.title.text = kotlin_title
             binding.price.text = kotlin_price
             basketTitle = kotlin_title
+            basketImage = kotlin_image
+            basketPrice = kotlin_price
         }
 
         val new_title = arguments?.getString("newBook_title")
@@ -61,6 +63,20 @@ class InfoFragment : Fragment() {
             basketImage = android_image
             basketPrice = android_price
         }
+
+        val search_title = arguments?.getString("searchBook_title")
+        val search_image = arguments?.getString("searchBook_image")
+        val search_price = arguments?.getString("searchBook_price")
+
+        if(search_title != null && search_image != null && search_price != null){
+            Picasso.get().load(search_image).into(binding.imageViewSelected)
+            binding.title.text = search_title
+            binding.price.text = search_price
+            basketTitle = search_title
+            basketPrice = search_price
+            basketImage = search_image
+        }
+
             viewModel = ViewModelProvider(requireActivity()).get(BookViewModel::class.java)
 
             binding.buttonBasket.setOnClickListener {
@@ -71,7 +87,6 @@ class InfoFragment : Fragment() {
                     url = "null"
                 )
 
-                viewModel.selectedBook(current)
             }
 
         binding.buttonBack.setOnClickListener {
