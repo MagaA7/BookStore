@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +27,7 @@ class basketFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView_basket)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = selectedBookAdapter
 
         return view
     }
@@ -35,9 +35,12 @@ class basketFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         data = ViewModelProvider(requireActivity()).get(BookViewModel::class.java)
-        data.selectedBooks.observe(viewLifecycleOwner, Observer { selectedBooks ->
-            selectedBookAdapter.submitList(selectedBooks)
-        })
+        val selectedBook = data.selectedBook
+
+        if (selectedBook != null) {
+            list.add(selectedBook)
+            selectedBookAdapter.notifyDataSetChanged()
+        }
 
     }
 }

@@ -86,6 +86,7 @@ class InfoFragment : Fragment() {
                     price = basketPrice,
                     url = "null"
                 )
+                viewModel.selectedBook = current
 
             }
 
