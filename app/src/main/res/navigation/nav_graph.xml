@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.bookstore.homeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.bookstore.searchFragment"
@@ -20,4 +24,13 @@
         android:name="com.example.bookstore.basketFragment"
         android:label="fragment_basket"
         tools:layout="@layout/fragment_basket" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.bookstore.InfoFragment"
+        android:label="fragment_option"
+        tools:layout="@layout/fragment_option" >
+        <action
+            android:id="@+id/action_infoFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

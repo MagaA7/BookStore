@@ -61,7 +61,6 @@ class homeFragment : Fragment() {
                     if (list != null) {
                         recyclerView.adapter = NewBookAdapter(list)
                     }
-                    Log.d("ARsen", "$list")
                 }
 
             }
@@ -78,7 +77,6 @@ class homeFragment : Fragment() {
                         if(list != null) {
                             recyclerView2.adapter = KotlinBookAdapter(list)
                         }
-                        Log.d("AR","$list")
                     }
 
                 }
@@ -99,7 +97,6 @@ class homeFragment : Fragment() {
                     if(list != null) {
                         recyclerView2.adapter = KotlinBookAdapter(list)
                     }
-                    Log.d("AR","$list")
                 }
 
             }
@@ -120,7 +117,6 @@ class homeFragment : Fragment() {
                     if(list != null) {
                         recyclerView3.adapter = AndroidBookAdapter(list)
                     }
-                    Log.d("AR","$list")
                 }
 
             }

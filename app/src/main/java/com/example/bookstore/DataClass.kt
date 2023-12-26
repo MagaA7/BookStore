@@ -33,3 +33,11 @@ data class AndroidBooks(
     var url : String
 )
 
+
+data class SelectedBook(
+    var title : String,
+    var price : String,
+    var image: String,
+    var url : String
+)
+
